@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class WeatherModel {
   String cityName;
   String dayDate;
@@ -8,8 +6,9 @@ class WeatherModel {
   double dayMinTemp;
   double dayWindSpeed;
   String dayConditionName;
-   String dayConditionIcon;
+  String dayConditionIcon;
   List hourData;
+  List fore;
 
   WeatherModel({
     required this.cityName,
@@ -18,12 +17,13 @@ class WeatherModel {
     required this.dayAvgTemp,
     required this.dayMinTemp,
     required this.dayWindSpeed,
-     required this.dayConditionName,
-     required this.dayConditionIcon,
+    required this.dayConditionName,
+    required this.dayConditionIcon,
     required this.hourData,
+    required this.fore,
   });
 
-  factory WeatherModel.fromJson(Map<String,dynamic> data) {
+  factory WeatherModel.fromJson(Map<String, dynamic> data) {
     var baseDay = data['forecast']['forecastday'][0]['day'];
 
     return WeatherModel(
@@ -33,9 +33,10 @@ class WeatherModel {
       dayAvgTemp: baseDay['avgtemp_c'],
       dayMinTemp: baseDay['mintemp_c'],
       dayWindSpeed: baseDay['maxwind_mph'],
-       dayConditionName: baseDay['condition']['text'],
-       dayConditionIcon: baseDay['condition']['icon'],
-      hourData: data['forecast']['forecastday'][0]['hour']
+      dayConditionName: baseDay['condition']['text'],
+      dayConditionIcon: baseDay['condition']['icon'],
+      hourData: data['forecast']['forecastday'][0]['hour'],
+      fore: data['forecast']['forecastday'],
     );
   }
 }
