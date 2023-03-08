@@ -8,9 +8,9 @@ import '../services/weather services.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
-  Function() fn;
+
   TextEditingController controller = TextEditingController();
-  SearchPage(this.fn);
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +28,10 @@ class SearchPage extends StatelessWidget {
                 cityName = text;
               ///  Weather weather = Weather();
                 controller.weatherModel = await controller.getWeather(cityName!);
-                ()=>fn;
+
                 print("***********************${controller.weatherModel!.cityName}**********************");
 
-                Get.back();
+                Navigator.of(context).pop();
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(

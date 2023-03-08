@@ -7,13 +7,9 @@ class WeatherModel {
   double dayAvgTemp;
   double dayMinTemp;
   double dayWindSpeed;
-  // String dayConditionName;
-  // String dayConditionIcon;
-  //
-  // String hourDate;
-  // double hourTemp;
-  // String hourConditionName;
-  // String hourConditionIcon;
+  String dayConditionName;
+   String dayConditionIcon;
+  List hourData;
 
   WeatherModel({
     required this.cityName,
@@ -22,17 +18,13 @@ class WeatherModel {
     required this.dayAvgTemp,
     required this.dayMinTemp,
     required this.dayWindSpeed,
-    // required this.dayConditionName,
-    // required this.dayConditionIcon,
-    // required this.hourDate,
-    // required this.hourTemp,
-    // required this.hourConditionName,
-    // required this.hourConditionIcon,
+     required this.dayConditionName,
+     required this.dayConditionIcon,
+    required this.hourData,
   });
 
   factory WeatherModel.fromJson(Map<String,dynamic> data) {
     var baseDay = data['forecast']['forecastday'][0]['day'];
-  ///  var baseHour = data['forecast']['forecastday']['hour'][0];
 
     return WeatherModel(
       cityName: data['location']['name'],
@@ -41,12 +33,9 @@ class WeatherModel {
       dayAvgTemp: baseDay['avgtemp_c'],
       dayMinTemp: baseDay['mintemp_c'],
       dayWindSpeed: baseDay['maxwind_mph'],
-      // dayConditionName: baseDay['condition']['text'],
-      // dayConditionIcon: baseDay['condition']['icon'],
-      // hourDate: baseHour['time'],
-      // hourTemp: baseHour['temp_c'],
-      // hourConditionName: baseHour['condition']['text'],
-      // hourConditionIcon: baseHour['condition']['icon'],
+       dayConditionName: baseDay['condition']['text'],
+       dayConditionIcon: baseDay['condition']['icon'],
+      hourData: data['forecast']['forecastday'][0]['hour']
     );
   }
 }
