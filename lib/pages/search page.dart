@@ -76,7 +76,6 @@ class SearchPage extends StatelessWidget {
                                     {'city': text},
                                   );
                                   controller.buildList();
-
                                   Get.back();
                                 },
                                 decoration: InputDecoration(
@@ -93,8 +92,7 @@ class SearchPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            backgroundColor:
-                                const Color.fromRGBO(42, 60, 93, 1.0),
+                            backgroundColor: Colors.white,
                           );
                         },
                         icon: const Icon(

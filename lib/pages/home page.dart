@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   bool isDay(String text) {
     String newText = text.split(':')[0].substring(10);
     int d = int.parse(newText);
-    if (d <= 12 && d >= 0)
+    if (d <= 18 && d >= 6)
       return true;
     else
       return false;
@@ -48,23 +48,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(width: 20),
+          SizedBox(
+            height: 70,
+            width: 70,
+            child: Image.network('https:$icona'),
+          ),
           Expanded(
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 70,
-                  width: 70,
-                  child: Image.network('https:$icona'),
-                ),
-                Text(
-                  cond,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
+            child: Text(
+              cond,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                overflow: TextOverflow.clip,
+              ),
             ),
           ),
           Text(
@@ -163,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          controller.weatherModel!.dayDate,
+                          controller.weatherModel!.dayDate.substring(10),
                           style: const TextStyle(
                             fontSize: 28,
                             color: Colors.white,
