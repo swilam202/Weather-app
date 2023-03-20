@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                ))
+                ),)
               : Container(
                   decoration: BoxDecoration(
                     gradient: isDay(controller.weatherModel!.dayDate)
