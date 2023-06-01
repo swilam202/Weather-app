@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class ThemeServices {
   static Gradient dayGradient = const LinearGradient(
     colors: [
-      Color.fromRGBO(217, 206, 155, 1.0),
-      Color.fromRGBO(245, 200, 13, 1.0),
+      Color.fromRGBO(222, 185, 81, 1.0),
+      Color.fromRGBO(234, 212, 140, 1.0),
     ],
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,

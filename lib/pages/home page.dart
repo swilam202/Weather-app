@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/DataBase/DBHelper.dart';
 import 'package:weatherapp/controllers/get%20controller.dart';
-
 import 'package:get/get.dart';
+import '../functions.dart';
 import '../services/themes services.dart';
 import 'search page.dart';
 
@@ -21,60 +21,6 @@ class _HomePageState extends State<HomePage> {
     dbHelper.init();
   }
 
-  bool isDay(String text) {
-    String newText = text.split(':')[0].substring(10);
-    int d = int.parse(newText);
-    if (d <= 18 && d >= 6)
-      return true;
-    else
-      return false;
-  }
-
-  Padding rowBuilder(
-      {required String avgTe,
-      required String icona,
-      required String dayDate,
-      required String cond}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            dayDate,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(width: 20),
-          SizedBox(
-            height: 70,
-            width: 70,
-            child: Image.network('https:$icona'),
-          ),
-          Expanded(
-            child: Text(
-              cond,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-          ),
-          Text(
-            avgTe,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,35 +30,47 @@ class _HomePageState extends State<HomePage> {
           builder: (controller) => controller.weatherModel == null
               ? Center(
                   child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'There is no selected city search now!',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('images/background2.gif'),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          controller.buildList();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SearchPage(),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.search),
-                      ),
-                    ],
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'There is no selected city search now!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            controller.buildList();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SearchPage(),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            Icons.search,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                        ),
+                        //Image.asset('images/background.gif')
+                      ],
+                    ),
                   ),
-                ),)
+                )
               : Container(
                   decoration: BoxDecoration(
                     gradient: isDay(controller.weatherModel!.dayDate)
@@ -126,21 +84,19 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 30),
+                        Text(
+                          controller.weatherModel!.cityName,
+                          style: const TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.25),
-                            Text(
-                              controller.weatherModel!.cityName,
-                              style: const TextStyle(
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 30),
                             IconButton(
                               onPressed: () {
                                 controller.buildList();
@@ -155,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
+                            const SizedBox(width: 25),
                           ],
                         ),
                         const SizedBox(height: 30),
@@ -171,7 +128,8 @@ class _HomePageState extends State<HomePage> {
                           width: 120,
                           height: 120,
                           child: Image.network(
-                              'https:${controller.weatherModel!.dayConditionIcon}'),
+                            'https:${controller.weatherModel!.dayConditionIcon}',
+                          ),
                         ),
                         const SizedBox(height: 30),
                         Text(
@@ -251,7 +209,8 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 60),
                         Container(
                           height: 200,
-                          width: MediaQuery.of(context).size.width * 0.95,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: isDay(controller.weatherModel!.dayDate)
                                 ? ThemeServices.dayColor
@@ -273,22 +232,25 @@ class _HomePageState extends State<HomePage> {
                                         .toString()
                                         .substring(10),
                                     style: const TextStyle(
-                                        fontSize: 25,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 Image.network(
-                                    'https:${controller.weatherModel!.hourData[index]['condition']['icon']}'),
+                                  'https:${controller.weatherModel!.hourData[index]['condition']['icon']}',
+                                ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 5),
                                   child: Text(
                                     '${controller.weatherModel!.hourData[index]['temp_c']}',
                                     style: const TextStyle(
-                                        fontSize: 25,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -297,36 +259,30 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 60),
                         Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             color: isDay(controller.weatherModel!.dayDate)
                                 ? ThemeServices.dayColor
                                 : ThemeServices.nightColor,
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                            ),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          width: MediaQuery.of(context).size.width * 0.95,
+                          width: MediaQuery.of(context).size.width,
                           height: 300,
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
-                            itemCount: controller.weatherModel!.fore.length,
+                            itemCount:
+                                controller.weatherModel!.forecast.length - 1,
                             itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  rowBuilder(
-                                      avgTe:
-                                          '${controller.weatherModel!.fore[index]['day']['avgtemp_c']}',
-                                      icona:
-                                          '${controller.weatherModel!.fore[index]['day']['condition']['icon']}',
-                                      dayDate: controller
-                                          .weatherModel!.fore[index]['date']
-                                          .toString()
-                                          .substring(6),
-                                      cond:
-                                          '${controller.weatherModel!.fore[index]['day']['condition']['text']}'),
-                                ],
+                              return foreCastBuilder(
+                                avgTe:
+                                    '${controller.weatherModel!.forecast[index + 1]['day']['avgtemp_c']}',
+                                icon:
+                                    '${controller.weatherModel!.forecast[index + 1]['day']['condition']['icon']}',
+                                dayDate: controller
+                                    .weatherModel!.forecast[index + 1]['date']
+                                    .toString(),
+                                cond:
+                                    '${controller.weatherModel!.forecast[index + 1]['day']['condition']['text']}',
                               );
                             },
                           ),

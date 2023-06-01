@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/controllers/get%20controller.dart';
 import 'package:get/get.dart';
-
-import 'package:weatherapp/pages/home%20page.dart';
-
+import 'package:weatherapp/functions.dart';
 import '../DataBase/DBHelper.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
 
   DBHelper dbHelper = DBHelper();
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +23,9 @@ class SearchPage extends StatelessWidget {
               child: ListView(
                 children: [
                   TextField(
-                    onSubmitted: (text) async {
-                      cityName = text;
-                      controller.weatherModel =
-                          await controller.getWeather(cityName!);
-                      Navigator.of(context).pop();
+                    controller: textEditingController,
+                    onSubmitted: (text) {
+                      search(text, context);
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -42,9 +39,9 @@ class SearchPage extends StatelessWidget {
                       hintText: 'Enter City Name',
                       labelText: 'Search',
                       suffixIcon: IconButton(
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => HomePage())),
+                        onPressed: () {
+                          search(textEditingController.text, context);
+                        },
                         icon: const Icon(Icons.search),
                       ),
                     ),
@@ -131,10 +128,8 @@ class SearchPage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(10),
                           child: ListTile(
-                            onTap: () async {
-                              controller.weatherModel = await controller
-                                  .getWeather(controller.cities[index]['city']);
-                              Navigator.of(context).pop();
+                            onTap: () {
+                              search(controller.cities[index]['city'], context);
                             },
                             leading: Text(
                               controller.cities[index]['city'].toString(),

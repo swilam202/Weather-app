@@ -8,7 +8,7 @@ class WeatherModel {
   String dayConditionName;
   String dayConditionIcon;
   List hourData;
-  List fore;
+  List forecast;
 
   WeatherModel({
     required this.cityName,
@@ -20,7 +20,7 @@ class WeatherModel {
     required this.dayConditionName,
     required this.dayConditionIcon,
     required this.hourData,
-    required this.fore,
+    required this.forecast,
   });
 
   factory WeatherModel.fromJson(Map<String, dynamic> data) {
@@ -36,7 +36,7 @@ class WeatherModel {
       dayConditionName: baseDay['condition']['text'],
       dayConditionIcon: baseDay['condition']['icon'],
       hourData: data['forecast']['forecastday'][0]['hour'],
-      fore: data['forecast']['forecastday'],
+      forecast: data['forecast']['forecastday'],
     );
   }
 }

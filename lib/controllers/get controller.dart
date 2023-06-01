@@ -17,7 +17,7 @@ class DataController extends GetxController {
     http.Response response = await http.get(url);
     Map<String, dynamic> data = jsonDecode(response.body);
     WeatherModel weatherModel = WeatherModel.fromJson(data);
-    print(data);
+
     update();
     return weatherModel;
   }
