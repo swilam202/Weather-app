@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('images/background2.gif'),
+                        image: AssetImage('images/back.gif'),
                       ),
                     ),
                     width: MediaQuery.of(context).size.width,
